@@ -24,13 +24,13 @@ public class HttpRequestWrapper extends HttpServletRequestWrapper {
         this.request = request;
         this.response = response;
         this.sessionId = sessionId;
-        httpSessionWrapper = new HttpSessionWrapper(request, response, super.getSession(false), sessionId);
+        httpSessionWrapper = new HttpSessionWrapper(request, response, super.getSession(true), sessionId);
     }
 
     @Override
     public HttpSession getSession() {
         if (httpSessionWrapper == null) {
-            httpSessionWrapper = new HttpSessionWrapper(request, response, super.getSession(false), sessionId);
+            httpSessionWrapper = new HttpSessionWrapper(request, response, super.getSession(true), sessionId);
         }
         return httpSessionWrapper;
     }
@@ -42,7 +42,7 @@ public class HttpRequestWrapper extends HttpServletRequestWrapper {
             httpSession = httpSessionWrapper;
         } else {
             if(create){
-                httpSessionWrapper = new HttpSessionWrapper(request, response, super.getSession(false), sessionId);
+                httpSessionWrapper = new HttpSessionWrapper(request, response, super.getSession(true), sessionId);
                 httpSession = httpSessionWrapper;
             }else{
                 httpSession = null;

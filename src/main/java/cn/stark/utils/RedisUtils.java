@@ -17,6 +17,13 @@ public class RedisUtils {
     private static final Logger LOGGER = Logger.getLogger(RedisUtils.class);
     private static JedisPool pool;
 
+    public static JedisPool getPool() {
+        return pool;
+    }
+
+    public static void setPool(JedisPool pool) {
+        RedisUtils.pool = pool;
+    }
 
     /**
      * <p>通过key获取储存在redis中的value</p>
