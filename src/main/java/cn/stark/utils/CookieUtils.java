@@ -49,4 +49,24 @@ public class CookieUtils {
         }
         return "";
     }
+
+    public static void removeCookieValue(HttpServletRequest request, HttpServletResponse response, String name) {
+        try {
+            Cookie cookies[] = request.getCookies();
+            if (cookies != null && cookies.length > 0) {
+                for (Cookie cookie : cookies) {
+                    if (name.equalsIgnoreCase(cookie.getName())) {
+                        cookie = new Cookie(name, null);
+                        cookie.setMaxAge(0);
+                        cookie.setPath("/");
+                        //cookie.setDomain(domain);
+                        response.addCookie(cookie);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
