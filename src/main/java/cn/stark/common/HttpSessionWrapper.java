@@ -1,5 +1,10 @@
 package cn.stark.common;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,14 +27,20 @@ public class HttpSessionWrapper implements HttpSession {
 
     private HttpServletResponse httpServletResponse;
 
-    private Map<String, Object> sessionContent;
+    private Map<String, String> sessionContent;
+
+    private JedisPool jedisPool;
 
     public HttpSessionWrapper(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, HttpSession httpSession, String sessionId) {
         this.httpServletRequest = httpServletRequest;
         this.httpServletResponse = httpServletResponse;
         this.httpSession = httpSession;
         this.sessionId = sessionId;
-        sessionContent = new HashMap<String, Object>();
+        sessionContent = new HashMap<String, String>();
+        ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(httpSession.getServletContext());
+        jedisPool = (JedisPool) applicationContext.getBean("JedisPool");
+        Jedis jedis = jedisPool.getResource();
+        jedis.hmset(sessionId,sessionContent);
     }
 
     @Override
@@ -74,12 +85,12 @@ public class HttpSessionWrapper implements HttpSession {
 
     @Override
     public Object getValue(String s) {
-        return null;
+        return sessionContent.get(s);
     }
 
     @Override
     public Enumeration getAttributeNames() {
-        return null;
+        return sessionContent.;
     }
 
     @Override
