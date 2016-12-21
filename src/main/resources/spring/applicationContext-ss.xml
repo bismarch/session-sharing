@@ -17,6 +17,8 @@
               <constructor-arg index="0" ref="jedisPoolConfig"/>
               <constructor-arg index="1" type="java.lang.String" value="127.0.0.1"/>
               <constructor-arg index="2" type="int" value="6379"/>
+              <constructor-arg index="3" type="int" value="5000"/>
+              <constructor-arg index="4" type="java.lang.String" value="root"/>
        </bean>
 
        <bean id="redisUtils" class="cn.stark.utils.RedisUtils">

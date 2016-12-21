@@ -1,3 +1,4 @@
+<%@ page import="org.springframework.http.HttpRequest" %>
 <%--
   Created by IntelliJ IDEA.
   User: nimitz
@@ -9,6 +10,10 @@
 <html>
   <head>
     <title>123</title>
+    <%
+      request.getSession().setAttribute("name","tom");
+      System.out.print(session.getAttribute("name"));
+    %>
   </head>
   <body>
   </body>
